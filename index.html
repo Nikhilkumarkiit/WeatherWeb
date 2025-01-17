@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css ">
+</head>
+<body>
+    <div class="hero">
+          <div class="calender">
+            <div class="left">
+                <p id="date">01</p>
+                <p id="day">sunday</p>
+            </div>
+            <div class="right">
+                <p id="month">January</p>
+                <p id="year">2024</p>
+            </div>
+          </div>
+    </div>
+    <script>
+    const date=document.getElementById("date");
+    const day=document.getElementById("day");
+    const month=document.getElementById("month");
+    const year=document.getElementById("year");
+    
+    const today=new Date();
+    const weekday=["sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+    const months=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]
+    date.innerHTML=today.getDate();
+    day.innerHTML=weekday[today.getDay()];
+    month.innerHTML=months[today.getMonth()];
+    year.innerHTML=today.getFullYear();
+    </script>
+</body>
+</html>

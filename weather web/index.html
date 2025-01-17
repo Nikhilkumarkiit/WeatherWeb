@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=   , initial-scale=1.0">
+    <title>WEATHER</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="card">
+        <div class="search">
+            <input type="text" placeholder="ENTER CITY NAME" spellcheck="false">
+            <button><img src="https://www.svgrepo.com/show/532554/search-alt.svg" width="12px"></button>
+        </div>
+        <div class="error">
+           <p>Invalid city name</p> 
+        </div>
+        <div class="weather">
+            <img src="https://www.svgrepo.com/show/274804/rain.svg" class="weather-icon" width="100px">
+            <h1 class="temp">22°C</h1>
+            <h2 class="city">New York</h2>
+            <div class="details">
+                <div class="col">
+                    <img src="https://www.svgrepo.com/show/521708/humidity.svg" width="100px">
+                    <div>
+                        <p class="humidity">50%</p>
+                        <p>HUMIDITY</p>
+                    </div>
+                </div>
+                <div class="col">
+                    <img src="https://www.svgrepo.com/show/497671/wind.svg" width="100px">
+                    <div>
+                        <p class="wind">15 km/hr</p>
+                        <p>WIND SPEED</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+const apiKey="a8875d8b4ad6e4a072e6abf6cf9dadd4";
+const apiUrl="https://api.openweathermap.org/data/2.5/weather?units=metric&q=";
+const searchbox=document.querySelector(".search input");
+const searchbtn=document.querySelector(".search button");
+const weatherIcon=document.querySelector(".weather-icon");
+async function checkweather(city){
+    const response=await fetch(apiUrl +city+ `&appid=${apiKey}`);
+    if(response.status == 404){
+        document.querySelector(".error").style.display="block";
+        document.querySelector(".weather").style.display="none";
+    }else{
+    var data=await response.json();
+    console.log(data);
+    document.querySelector(".city").innerHTML=data.name;
+    document.querySelector(".temp").innerHTML=Math.round(data.main.temp) +"°C";
+    document.querySelector(".humidity").innerHTML=data.main.humidity +"%";
+    document.querySelector(".wind").innerHTML=data.wind.speed+" km/hr";
+    if(data.weather[0].main == "Clouds"){
+        weatherIcon.src="https://www.svgrepo.com/show/530233/weather.svg";
+    }
+   else if(data.weather[0].main == "Clear"){
+        weatherIcon.src="https://www.svgrepo.com/show/236609/sunny-sun.svg";
+    }
+    else if(data.weather[0].main == "Rain"){
+        weatherIcon.src="https://www.svgrepo.com/show/520207/weather-forecast.svg";
+    }
+   else if(data.weather[0].main == "Drizzle"){
+        weatherIcon.src="https://www.svgrepo.com/show/418031/cloud-drizzle.svg";
+    }
+   else if(data.weather[0].main == "Mist"){
+        weatherIcon.src="https://www.svgrepo.com/show/154294/mist.svg";
+    }
+    document.querySelector(".weather").style.display="block";
+    document.querySelector(".error").style.display="none";
+    }
+}
+searchbtn.addEventListener("click",()=>{
+    checkweather(searchbox.value);
+}
+)
+checkweather();
+ </script>
+</body>
+</html>
